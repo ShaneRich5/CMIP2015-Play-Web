@@ -22,8 +22,6 @@ public class Type extends Model {
     public String name;
     public Double watts;
 
-    public String brand;
-
     @JsonIgnore
     @ManyToOne
     public Appliance appliance;

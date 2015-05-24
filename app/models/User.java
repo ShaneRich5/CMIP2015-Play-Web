@@ -20,6 +20,14 @@ public class User extends Model {
 
     public String firstName;
     public String lastName;
+    public String number;
+    public String email;
+
+    public boolean active;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    public Address address;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

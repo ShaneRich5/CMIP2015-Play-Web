@@ -22,16 +22,26 @@ public class ApplianceCtrl extends Controller {
     private static ObjectMapper mapper = new ObjectMapper();
 
     public static Result index() {
-        ObjectNode result = mapper.createObjectNode();
         List<Appliance> applianceList = Appliance.find.all();
 
         if (applianceList.size() > 0) {
             ArrayNode applianceArrayNode = mapper.createArrayNode();
             for (Appliance appliance : applianceList) {
-                applianceArrayNode.add(Json.toJson(appliance));
+                ObjectNode node = (ObjectNode) Json.toJson(appliance);
+                List<Type> types = Type.find.where().eq("appliance_id", appliance.id).findList();
+
+                ArrayNode typeArrayNode = mapper.createArrayNode();
+                for (Type type : types) {
+                    typeArrayNode.add(Json.toJson(type));
+                }
+                node.put("types", typeArrayNode);
+                applianceArrayNode.add(node);
             }
-        } else
-            result.put("message", "No data");
+            return ok(applianceArrayNode);
+        }
+
+        ObjectNode result = mapper.createObjectNode();
+        result.put("message", "No data");
         return ok(result);
     }
 
