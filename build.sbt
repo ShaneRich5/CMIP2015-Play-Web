@@ -10,5 +10,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-  javaWs
+  javaWs,
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+  "com.github.javafaker" % "javafaker" % "0.5"
 )
